@@ -1,0 +1,26 @@
+---
+APP_PYTHON: "{{ '/usr/bin/python' if lookup('file', '/usr/bin/python', errors='ignore') else '/usr/bin/python3' }}"
+APP_DEPENDENCIES_REDHAT:
+  - java-11-openjdk
+  - java-11-openjdk-devel
+  - ant
+APP_DEPENDENCIES: "{{ APP_DEPENDENCIES_REDHAT if ansible_distribution_file_variety == 'RedHat' else APP_DEPENDENCIES_REDHAT }}"
+APP_NAME: squirrel-sql
+APP_DISPLAY_NAME: Squirrel SQL
+APP_GENERIC_NAME: A database tool
+APP_COMMENT: Connect to many types of databases
+APP_USER: "{{ lookup('env', 'USER') }}"
+APP_GROUP: "{{ APP_USER }}"
+APP_PREFIX: "{{ lookup('env', 'HOME') }}/.local"
+APP_SRC: "{{ APP_PREFIX }}/src/{{ APP_NAME  }}"
+APP_OPT: "{{ APP_PREFIX }}/opt/{{ APP_NAME  }}"
+APP_SHARE: "{{ APP_PREFIX }}/share/{{ APP_NAME  }}"
+APP_REPO: "https://git.code.sf.net/p/squirrel-sql/git"
+APP_TAG: "master"
+APP_DESKTOP: "{{ lookup('env', 'HOME') }}/.local/share/applications/{{ APP_NAME }}.desktop"
+APP_README: "{{ APP_SRC }}/README.md"
+APP_ICON: "{{ APP_OPT }}/icons/acorn.png"
+APP_EXEC: "{{ APP_OPT }}/squirrel-sql.sh"
+APP_KEYWORDS: "database;postgresql;mysql;oracle;"
+APP_CATEGORIES: "Utility;Accessibility;"
+

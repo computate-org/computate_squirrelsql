@@ -1,0 +1,6 @@
+- name: "install {{ APP_NAME }} locally"
+  connection: local
+  hosts: localhost
+  roles:
+    - computate.computate_squirrelsql
+

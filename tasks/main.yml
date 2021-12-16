@@ -1,0 +1,49 @@
+---
+- name: "Install dependencies: {{ APP_DEPENDENCIES | join(' ') }}"
+  shell: "pkcon install -y {{ item }} | true"
+  loop: "{{ APP_DEPENDENCIES }}"
+- name: "Create the directory {{ APP_SRC }}"
+  file:
+    name: "{{ APP_SRC }}"
+    state: directory
+- name: "Check for the README file {{ APP_README }}"
+  stat:
+    path: "{{ APP_README }}"
+  register: APP_README_PATH
+- name: "Clone the {{ APP_REPO }} source code into {{ APP_SRC }}"
+  git:
+    repo: "{{ APP_REPO }}"
+    dest: "{{ APP_SRC }}"
+    version: "{{ APP_TAG }}"
+  when: not APP_README_PATH.stat.exists
+  ignore_errors: true
+  #- name: "Run the ant script in {{ APP_SRC }}/sql12"
+  #  shell:
+  #    cmd: "(export JAVA_HOME=/usr/lib/jvm/java-11-openjdk && ant)"
+  #    chdir: "{{ APP_SRC }}/sql12"
+  #  loop: "{{ APP_DEPENDENCIES }}"
+- name: "Create the {{ APP_NAME }} install directory {{ APP_OPT }}. "
+  file:
+    name: "{{ APP_OPT }}"
+    state: directory
+- name: "Copy the {{ APP_NAME }} into the install directory {{ APP_OPT }}. "
+  synchronize:
+    src: "{{ APP_SRC }}/sql12/output/dist/"
+    dest: "{{ APP_OPT }}/"
+- name: "Make the script executable {{ APP_EXEC }}. "
+  ansible.builtin.file:
+    path: "{{ APP_EXEC }}"
+    mode: "0775"
+- name: "Set the SQUIRREL_SQL_HOME"
+  ansible.builtin.replace:
+    path: "{{ APP_EXEC }}"
+    regexp: "SQUIRREL_SQL_HOME='[^']*'"
+    replace: "SQUIRREL_SQL_HOME='{{ APP_OPT }}'"
+- name: "Create the launcher {{ APP_DESKTOP }}"
+  template:
+    src: app.desktop
+    dest: "{{ APP_DESKTOP }}"
+    mode: "0775"
+- name: "Trust the application launcher {{ APP_DESKTOP }}"
+  shell: 'gio set {{ APP_DESKTOP }} "metadata::trusted" yes'
+

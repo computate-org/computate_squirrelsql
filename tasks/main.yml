@@ -17,11 +17,11 @@
     version: "{{ APP_TAG }}"
   when: not APP_README_PATH.stat.exists
   ignore_errors: true
-  #- name: "Run the ant script in {{ APP_SRC }}/sql12"
-  #  shell:
-  #    cmd: "(export JAVA_HOME=/usr/lib/jvm/java-11-openjdk && ant)"
-  #    chdir: "{{ APP_SRC }}/sql12"
-  #  loop: "{{ APP_DEPENDENCIES }}"
+- name: "Run the ant script in {{ APP_SRC }}/sql12"
+  shell:
+    cmd: "(export JAVA_HOME=/usr/lib/jvm/java-11-openjdk && ant)"
+    chdir: "{{ APP_SRC }}/sql12"
+  loop: "{{ APP_DEPENDENCIES }}"
 - name: "Create the {{ APP_NAME }} install directory {{ APP_OPT }}. "
   file:
     name: "{{ APP_OPT }}"

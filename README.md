@@ -29,6 +29,6 @@ ansible-playbook -K install.yml
 
 - In the Aliases tab, click the [ + ] button. 
 - Provide a name for your connection and the JDBC URL to your MySQL database and the username and password (jdbc:mysql://127.0.0.1:3306/mydb?useSSL=false). 
-- Click [ Test ] buttin to test the connection, then click [ Connect ] to connect. 
+- Click [ Test ] button to test the connection, then click [ Connect ] to connect. 
 
 

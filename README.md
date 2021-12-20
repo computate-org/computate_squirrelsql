@@ -10,10 +10,10 @@ git clone git@github.com:computate-org/computate_squirrelsql.git ~/.ansible/role
 cd ~/.ansible/roles/computate.computate_squirrelsql
 ```
 
-# Run the SquirreL SQL ansible playbook to install SquirreL SQL locally (requires sudo privileges with -K). 
+# Run the SquirreL SQL ansible playbook to install SquirreL SQL locally. 
 
 ```bash
-ansible-playbook -K install.yml
+ansible-playbook install.yml
 ```
 
 # Setup Drivers and Connections in SquirreL SQL

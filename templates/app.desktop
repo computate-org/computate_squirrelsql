@@ -4,7 +4,7 @@ Name={{ APP_DISPLAY_NAME }}
 GenericName={{ APP_GENERIC_NAME }}
 Comment={{ APP_COMMENT }}
 Icon={{ APP_ICON }}
-Exec={{ APP_EXEC }}
+Exec=env PATH=/usr/lib/jvm/java-11-openjdk/bin:$PATH {{ APP_EXEC }}
 Terminal=false
 Categories={{ APP_CATEGORIES }}
 Keywords={{ APP_KEYWORDS }}
